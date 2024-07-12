@@ -1,14 +1,20 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Stack } from 'expo-router';
 
-const _layout = () => {
+export default function App() {
   return (
-    <View>
-      <Text className="text-red-600 p-5">hello
-        
-      </Text>
-    </View>
+    <SafeAreaProvider>
+      <RootNavigation />
+      <StatusBar style="dark" backgroundColor="#ffffff" />
+    </SafeAreaProvider>
+  );
+}
+
+export const RootNavigation = () => {
+  return (
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
 };
-
-export default _layout;
