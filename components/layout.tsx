@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image, StatusBar } from 'react-native';
+import logo from '@/assets/images/logo.png';
 
 const ScreenLayout = ({
   headerTitle,
@@ -11,13 +11,20 @@ const ScreenLayout = ({
 }) => {
   return (
     <View style={[styles.container, { backgroundColor: '#ffffff' }]}>
-      <StatusBar style="dark" backgroundColor="#ffffff" />
+      <StatusBar barStyle={'dark-content'} backgroundColor="#ffffff" />
       <Stack>
         <Stack.Screen
           name={name}
           options={{
             headerLargeTitle: true,
-            headerTitleStyle: { color: '#000000', fontSize: 28 },
+            headerLeft: () => (
+              <Image
+                source={logo}
+                style={{ width: 100, height: 20, objectFit: 'cover' }}
+              />
+            ),
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#000000', fontSize: 19 },
             headerTransparent: false,
             headerStyle: styles.headerStyle,
             headerBlurEffect: 'prominent',
@@ -33,7 +40,7 @@ const ScreenLayout = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 10,
   },
   headerStyle: {
     backgroundColor: '#ffffff',
