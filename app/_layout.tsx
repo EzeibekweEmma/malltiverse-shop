@@ -1,6 +1,6 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { ActivityIndicator, StatusBar, Text } from 'react-native';
+import { ActivityIndicator, StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
 
 export default function App() {
