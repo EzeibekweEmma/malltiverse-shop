@@ -4,13 +4,15 @@ import React, { createContext, useContext, useState } from 'react';
 type Product = {
   id: number;
   name: string;
+  description: string;
   price: number;
+  photos: string[];
 };
 
 // Define a type for your context data including cart functionality
 type ProductContextType = {
-  data: Product[]; // Array of products
-  cart: Product[]; // Array of products in the cart
+  data: Product[];
+  cart: Product[];
   setData: React.Dispatch<React.SetStateAction<Product[]>>;
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;

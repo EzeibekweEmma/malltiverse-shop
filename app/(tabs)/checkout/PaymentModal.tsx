@@ -2,6 +2,7 @@ import { View, Text, Modal, TextInput, Image, Pressable } from 'react-native';
 import React from 'react';
 import { LeftArrowIcon } from '@/assets/images/svgIcons';
 import { useNavigation } from '@react-navigation/native';
+import { useProductContext } from '@/component/ProductContext';
 
 const PaymentModal = ({
   isModal,
@@ -12,9 +13,11 @@ const PaymentModal = ({
 }) => {
   const navigation = useNavigation();
   const paymentCard = require('@/assets/images/paymentCard.png');
+  const { clearCart } = useProductContext();
 
   const handleSuccessBtn = () => {
     setIsModal(false);
+    clearCart();
     navigation.navigate('successful' as never);
   };
 

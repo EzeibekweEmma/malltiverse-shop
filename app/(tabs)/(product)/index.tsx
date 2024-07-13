@@ -104,7 +104,7 @@ const ProductScreen = () => {
                   keyExtractor={(item) => item.id.toString()}
                   horizontal={true}
                   pagingEnabled={true}
-                  snapToInterval={itemWidth * 2}
+                  // snapToInterval={itemWidth * 2}
                   decelerationRate="fast"
                   initialNumToRender={2}
                   maxToRenderPerBatch={2}
@@ -133,7 +133,7 @@ const ProductScreen = () => {
                   keyExtractor={(item) => item.id.toString()}
                   horizontal={true}
                   pagingEnabled={true}
-                  snapToInterval={itemWidth * 2}
+                  // snapToInterval={itemWidth * 2}
                   decelerationRate="fast"
                   initialNumToRender={2}
                   maxToRenderPerBatch={2}
@@ -164,7 +164,7 @@ const ProductScreen = () => {
                   keyExtractor={(item) => item.id.toString()}
                   horizontal={true}
                   pagingEnabled={true}
-                  snapToInterval={itemWidth * 2}
+                  // snapToInterval={itemWidth * 2}
                   decelerationRate="fast"
                   initialNumToRender={2}
                   maxToRenderPerBatch={2}
