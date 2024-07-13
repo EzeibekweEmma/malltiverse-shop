@@ -7,6 +7,7 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Constants from 'expo-constants';
@@ -14,9 +15,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ProductCard from './ProductCard';
 
 const ProductScreen = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [numColumns, setNumColumns] = useState(2);
   const screenWidth = Dimensions.get('window').width;
   const itemWidth = screenWidth / 2;
   const heroImage = require('@/assets/images/heroImage.png');
@@ -36,24 +36,6 @@ const ProductScreen = () => {
     if (item.categories[0].id === '12f7f150f6cc47f3889f4d56ab29d57d')
       techData.push(item);
   });
-
-  useEffect(() => {
-    const updateColumns = () => {
-      const screenWidth = Dimensions.get('window').width;
-      const cardWidth = 180;
-
-      const columns = Math.floor(screenWidth / cardWidth);
-      setNumColumns(columns);
-    };
-
-    updateColumns();
-
-    const subscription = Dimensions.addEventListener('change', updateColumns);
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
 
   useEffect(() => {
     fetchData();
@@ -95,97 +77,109 @@ const ProductScreen = () => {
             </View>
 
             {/* Product details */}
-            <View className="mt-8 space-y-20">
-              {/* Tech Gadget */}
-              <View className="">
-                <Text className="font-[semi] text-xl mb-4">Tech Gadget</Text>
-                <FlatList
-                  data={techData}
-                  keyExtractor={(item) => item.id.toString()}
-                  horizontal={true}
-                  pagingEnabled={true}
-                  // snapToInterval={itemWidth * 2}
-                  decelerationRate="fast"
-                  initialNumToRender={2}
-                  maxToRenderPerBatch={2}
-                  ListEmptyComponent={
-                    <View className="h-[40vh] items-center justify-center">
-                      <Text className="text-3xl text-slate-800">
-                        No items found
-                      </Text>
-                    </View>
-                  }
-                  ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-                  ListFooterComponent={<Text className="mb-2" />}
-                  renderItem={({ item }) => (
-                    <View style={{ width: itemWidth - 30 }}>
-                      <ProductCard item={item} />
-                    </View>
-                  )}
-                  contentContainerStyle={{ alignItems: 'center' }}
-                />
+            {loading ? (
+              <ActivityIndicator className="mt-20" size={'large'} />
+            ) : (
+              <View className="mt-8 space-y-20">
+                {/* Tech Gadget */}
+                <View className="">
+                  <Text className="font-[semi] text-xl mb-4">Tech Gadget</Text>
+                  <FlatList
+                    data={techData}
+                    keyExtractor={(item) => item.id.toString()}
+                    horizontal={true}
+                    pagingEnabled={true}
+                    // snapToInterval={itemWidth * 2}
+                    decelerationRate="fast"
+                    initialNumToRender={2}
+                    maxToRenderPerBatch={2}
+                    ListEmptyComponent={
+                      <View className="h-[40vh] items-center justify-center">
+                        <Text className="text-3xl text-slate-800">
+                          No items found
+                        </Text>
+                      </View>
+                    }
+                    ItemSeparatorComponent={() => (
+                      <View style={{ width: 10 }} />
+                    )}
+                    ListFooterComponent={<Text className="mb-2" />}
+                    renderItem={({ item }) => (
+                      <View style={{ width: itemWidth - 30 }}>
+                        <ProductCard item={item} />
+                      </View>
+                    )}
+                    contentContainerStyle={{ alignItems: 'center' }}
+                  />
+                </View>
+                {/* Men’s Fashion */}
+                <View className="">
+                  <Text className="font-[semi] text-xl mb-4">
+                    Men's Fashion
+                  </Text>
+                  <FlatList
+                    data={menData}
+                    keyExtractor={(item) => item.id.toString()}
+                    horizontal={true}
+                    pagingEnabled={true}
+                    // snapToInterval={itemWidth * 2}
+                    decelerationRate="fast"
+                    initialNumToRender={2}
+                    maxToRenderPerBatch={2}
+                    ListEmptyComponent={
+                      <View className="h-[40vh] items-center justify-center">
+                        <Text className="text-3xl text-slate-800">
+                          No items found
+                        </Text>
+                      </View>
+                    }
+                    ItemSeparatorComponent={() => (
+                      <View style={{ width: 10 }} />
+                    )}
+                    ListFooterComponent={<Text className="mb-2" />}
+                    renderItem={({ item }) => (
+                      <View style={{ width: itemWidth - 30 }}>
+                        <ProductCard item={item} />
+                      </View>
+                    )}
+                    contentContainerStyle={{ alignItems: 'center' }}
+                  />
+                </View>
+                {/* Women’s Fashion */}
+                <View className="">
+                  <Text className="font-[semi] text-xl mb-4">
+                    Women's Fashion
+                  </Text>
+                  <FlatList
+                    data={womenData}
+                    keyExtractor={(item) => item.id.toString()}
+                    horizontal={true}
+                    pagingEnabled={true}
+                    // snapToInterval={itemWidth * 2}
+                    decelerationRate="fast"
+                    initialNumToRender={2}
+                    maxToRenderPerBatch={2}
+                    ListEmptyComponent={
+                      <View className="h-[40vh] items-center justify-center">
+                        <Text className="text-3xl text-slate-800">
+                          No items found
+                        </Text>
+                      </View>
+                    }
+                    ItemSeparatorComponent={() => (
+                      <View style={{ width: 10 }} />
+                    )}
+                    ListFooterComponent={<Text className="mb-2" />}
+                    renderItem={({ item }) => (
+                      <View style={{ width: itemWidth - 30 }}>
+                        <ProductCard item={item} />
+                      </View>
+                    )}
+                    contentContainerStyle={{ alignItems: 'center' }}
+                  />
+                </View>
               </View>
-              {/* Men’s Fashion */}
-              <View className="">
-                <Text className="font-[semi] text-xl mb-4">Men's Fashion</Text>
-                <FlatList
-                  data={menData}
-                  keyExtractor={(item) => item.id.toString()}
-                  horizontal={true}
-                  pagingEnabled={true}
-                  // snapToInterval={itemWidth * 2}
-                  decelerationRate="fast"
-                  initialNumToRender={2}
-                  maxToRenderPerBatch={2}
-                  ListEmptyComponent={
-                    <View className="h-[40vh] items-center justify-center">
-                      <Text className="text-3xl text-slate-800">
-                        No items found
-                      </Text>
-                    </View>
-                  }
-                  ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-                  ListFooterComponent={<Text className="mb-2" />}
-                  renderItem={({ item }) => (
-                    <View style={{ width: itemWidth - 30 }}>
-                      <ProductCard item={item} />
-                    </View>
-                  )}
-                  contentContainerStyle={{ alignItems: 'center' }}
-                />
-              </View>
-              {/* Women’s Fashion */}
-              <View className="">
-                <Text className="font-[semi] text-xl mb-4">
-                  Women's Fashion
-                </Text>
-                <FlatList
-                  data={womenData}
-                  keyExtractor={(item) => item.id.toString()}
-                  horizontal={true}
-                  pagingEnabled={true}
-                  // snapToInterval={itemWidth * 2}
-                  decelerationRate="fast"
-                  initialNumToRender={2}
-                  maxToRenderPerBatch={2}
-                  ListEmptyComponent={
-                    <View className="h-[40vh] items-center justify-center">
-                      <Text className="text-3xl text-slate-800">
-                        No items found
-                      </Text>
-                    </View>
-                  }
-                  ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-                  ListFooterComponent={<Text className="mb-2" />}
-                  renderItem={({ item }) => (
-                    <View style={{ width: itemWidth - 30 }}>
-                      <ProductCard item={item} />
-                    </View>
-                  )}
-                  contentContainerStyle={{ alignItems: 'center' }}
-                />
-              </View>
-            </View>
+            )}
           </View>
         </SafeAreaView>
       </GestureHandlerRootView>

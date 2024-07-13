@@ -1,7 +1,7 @@
 import { TrashIcon } from '@/assets/images/svgIcons';
 import { useProductContext } from '@/component/ProductContext';
 import { useNavigation } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -18,33 +18,50 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const CartScreen = () => {
   const navigation = useNavigation();
-  const { cart, removeFromCart, clearCart } = useProductContext();
+  const { cart, removeFromCart } = useProductContext();
 
   // State to store item quantities
-  const [quantities, setQuantities] = useState(
-    cart.reduce((acc, item) => ({ ...acc, [item.id]: 1 }), {})
-  );
+  const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
+
+  // Initialize quantities state based on cart items
+  useEffect(() => {
+    const initialQuantities = cart.reduce(
+      (acc, item) => ({ ...acc, [item.id]: 1 }),
+      {}
+    );
+    setQuantities(initialQuantities);
+  }, [cart]);
 
   // Function to handle quantity increase
-  const handleIncrease = (id) => {
+  const handleIncrease = (id: string | number) => {
     setQuantities((prev) => ({
       ...prev,
-      [id]: prev[id] + 1,
+      [id]: (prev[id] || 0) + 1,
     }));
   };
 
   // Function to handle quantity decrease
-  const handleDecrease = (id) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [id]: prev[id] > 1 ? prev[id] - 1 : 1,
-    }));
+  const handleDecrease = (id: number) => {
+    setQuantities((prev) => {
+      if (prev[id] > 1) {
+        return {
+          ...prev,
+          [id]: prev[id] - 1,
+        };
+      } else {
+        removeFromCart(id);
+        const newQuantities = { ...prev };
+        delete newQuantities[id];
+        return newQuantities;
+      }
+    });
   };
 
   // Function to calculate total cost
   const calculateTotalCost = () => {
     return cart.reduce(
-      (total, product) => total + product.price * quantities[product.id],
+      (total, product) =>
+        total + product.price[0] * (quantities[product.id] || 0),
       0
     );
   };
@@ -52,7 +69,7 @@ const CartScreen = () => {
   // Render item in cart
   const renderItem = ({ item }) => {
     return (
-      <View className="flex-row items-center justify-between px-4 py-7 border border-pryColor/30 rounded-md mb-5">
+      <View className="flex-row items-center justify-between pr-4 pl-2 py-7 border border-pryColor/30 rounded-md mb-5">
         <Image
           source={{
             uri: `https://api.timbu.cloud/images/${item?.photos[0]?.url}`,
@@ -61,7 +78,7 @@ const CartScreen = () => {
             width: 80,
             height: 80,
             objectFit: 'contain',
-            marginRight: 5,
+            marginRight: 7,
           }}
         />
         <View className="flex-1">
@@ -71,7 +88,7 @@ const CartScreen = () => {
           >
             <TrashIcon />
           </TouchableOpacity>
-          <Text className="font-[semi] text-lg mr-5" numberOfLines={1}>
+          <Text className="font-[semi] text-lg mr-7" numberOfLines={1}>
             {item.name}
           </Text>
           <Text className="font-[regular] text-base">{item.description}</Text>
@@ -82,7 +99,9 @@ const CartScreen = () => {
                   -
                 </Text>
               </TouchableOpacity>
-              <Text className="font-[semi] text-lg">{quantities[item.id]}</Text>
+              <Text className="font-[semi] text-lg">
+                {quantities[item.id] || 0}
+              </Text>
               <TouchableOpacity onPress={() => handleIncrease(item.id)}>
                 <Text className="font-[semi] border pl-2.5 pr-2 pt-0.5 text-2xl">
                   +
@@ -90,7 +109,7 @@ const CartScreen = () => {
               </TouchableOpacity>
             </View>
             <Text className="font-[semi] text-lg mt-2">
-              N {Number(item.price) * quantities[item.id]}
+              N {item.price[0] * (quantities[item.id] || 0)}
             </Text>
           </View>
         </View>
@@ -158,7 +177,7 @@ const CartScreen = () => {
                       Total Amount
                     </Text>
                     <Text className="font-[medium] text-xl mt-3">
-                      N {calculateTotalCost() + 1500 - 3500}
+                      N {calculateTotalCost() + 1500 + 3500}
                     </Text>
                   </View>
                   <View className="items-center justify-center mt-8">
