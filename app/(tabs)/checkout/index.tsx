@@ -6,14 +6,18 @@ import {
   Platform,
   TouchableOpacity,
   TextInput,
+  Modal,
+  Button,
 } from 'react-native';
 import React, { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import PaymentModal from './PaymentModal';
 
 const CheckoutScreen = () => {
   const [selectedOption, setSelectedOption] = useState('pickup');
+  const [isModal, setIsModal] = useState(false);
 
-  const handleSelectOption = (option) => {
+  const handleSelectOption = (option: string) => {
     setSelectedOption(option);
   };
 
@@ -75,7 +79,7 @@ const CheckoutScreen = () => {
               <View>
                 <Text className="font-[medium] text-xl mb-3">Delivery</Text>
                 <TextInput
-                  className="h-12 rounded-md p-2.5 border border-pryColor text-xl font-[medium]"
+                  className="h-12 rounded-md p-2.5 border border-pryColor/40 text-xl font-[medium]"
                   autoCapitalize="none"
                 />
               </View>
@@ -85,22 +89,27 @@ const CheckoutScreen = () => {
               <View className="space-y-3 mb-7">
                 <Text className="font-[medium] text-xl">Contact</Text>
                 <TextInput
-                  className="h-10 w-[70%] rounded-md p-2.5 border border-pryColor text-lg font-[medium]"
+                  className="h-10 w-[70%] rounded-md p-2.5 border border-pryColor/40 text-lg font-[medium]"
                   autoCapitalize="none"
                   placeholder="Phone nos 1"
                   keyboardType="numeric"
                 />
                 <TextInput
-                  className="h-10 w-[70%] rounded-md p-2.5 border border-pryColor text-lg font-[medium]"
+                  className="h-10 w-[70%] rounded-md p-2.5 border border-pryColor/40 text-lg font-[medium]"
                   autoCapitalize="none"
                   placeholder="Phone nos 2"
                   keyboardType="numeric"
                 />
               </View>
             </View>
-            {/* Payment */}
+            {/* Payment Modal*/}
+            <PaymentModal isModal={isModal} setIsModal={setIsModal} />
+
             <View className="items-center justify-center">
-              <TouchableOpacity className="bg-secColor w-[80%] p-3 rounded-xl items-center justify-center">
+              <TouchableOpacity
+                onPress={() => setIsModal(true)}
+                className="bg-secColor w-[80%] p-3 rounded-xl items-center justify-center"
+              >
                 <Text className="text-pryColor font-[medium] text-base">
                   Go to Payment
                 </Text>
