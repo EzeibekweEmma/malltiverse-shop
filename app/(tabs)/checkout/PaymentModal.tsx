@@ -1,6 +1,7 @@
 import { View, Text, Modal, TextInput, Image, Pressable } from 'react-native';
 import React from 'react';
-import { LeftArrow } from '@/assets/images/svgIcons';
+import { LeftArrowIcon } from '@/assets/images/svgIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const PaymentModal = ({
   isModal,
@@ -9,7 +10,13 @@ const PaymentModal = ({
   isModal: boolean;
   setIsModal: (arg: boolean) => void;
 }) => {
+  const navigation = useNavigation();
   const paymentCard = require('@/assets/images/paymentCard.png');
+
+  const handleSuccessBtn = () => {
+    setIsModal(false);
+    navigation.navigate('successful' as never);
+  };
 
   return (
     <Modal
@@ -22,7 +29,7 @@ const PaymentModal = ({
       <View className="mx-5">
         <View className="flex-row space-x-5 py-5 mb-5">
           <Pressable onPress={() => setIsModal(false)}>
-            <LeftArrow />
+            <LeftArrowIcon />
           </Pressable>
           <Text className="text-2xl font-[semi]">Payment</Text>
         </View>
@@ -65,7 +72,7 @@ const PaymentModal = ({
 
           <View className="items-center justify-center w-full">
             <Pressable
-              onPress={() => setIsModal(false)}
+              onPress={handleSuccessBtn}
               className="bg-secColor w-[80vw] p-3 rounded-xl items-center justify-center"
             >
               <Text className="text-pryColor font-[medium] text-base">

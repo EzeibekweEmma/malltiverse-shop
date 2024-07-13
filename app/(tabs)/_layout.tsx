@@ -75,6 +75,12 @@ const TabsNavigation = () => {
           ),
         }}
       />
+      <Tabs.Screen
+        name="successful"
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
     </Tabs>
   );
 };

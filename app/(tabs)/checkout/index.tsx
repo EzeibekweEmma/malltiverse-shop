@@ -6,8 +6,6 @@ import {
   Platform,
   TouchableOpacity,
   TextInput,
-  Modal,
-  Button,
 } from 'react-native';
 import React, { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
