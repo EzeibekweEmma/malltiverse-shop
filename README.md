@@ -2,6 +2,8 @@
 Live Link: [Malltiverse Shop](https://appetize.io/app/b_5qphjzj4autzao5mavwt6q2pau)
 APK Link: [Malltiverse Shop](https://expo.dev/artifacts/eas/ceeptzKsNXTV3hBa1JCucT.apk)
 
+![ProductPage](./assets/images/ProductPage1.png)
+
 **Objectives**: Find you assigned Timbu Shop design from a designer and do a pixel perfect design implementation of that design App on your app that implemented the Timbu API.
 
 **Requirements**:
@@ -33,3 +35,23 @@ APK Link: [Malltiverse Shop](https://expo.dev/artifacts/eas/ceeptzKsNXTV3hBa1JCu
    ```
 
 select the platform you want to run the app on.
+
+
+## Screenshots
+
+#### Product Page
+![ProductPage](./assets/images/ProductPage1.png)
+![ProductPage2](./assets/images/productPage2.png)
+
+#### Cart Page
+![cartPage1](./assets/images/cartPage1.png)
+![cartPage2](./assets/images/cartPage2.png)
+
+#### Checkout Page
+![checkoutPage](./assets/images/checkoutPage.png)
+
+#### Payment Page
+![paymentPage](./assets/images/paymentPage.png)
+
+#### Successful Page
+![successfulPage](./assets/images/successfulPage.png)
